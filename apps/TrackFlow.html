@@ -19,6 +19,8 @@
       --card: #ffffff;
       --line: #dbeafe;
       --accent: #10b981;
+      --success: #047857;
+      --error: #b91c1c;
       --radius: 18px;
       --shadow: 0 15px 45px rgba(37, 99, 235, 0.12);
     }
@@ -347,6 +349,136 @@
       font-weight: 600;
     }
 
+    .apply-view {
+      display: none;
+      padding: 52px 0 70px;
+    }
+
+    body.view-apply .home-only {
+      display: none;
+    }
+
+    body.view-apply .apply-view {
+      display: block;
+    }
+
+    .application-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .field,
+    .field-full {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field-full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .required {
+      color: var(--error);
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 11px 12px;
+      font: inherit;
+      color: var(--ink);
+      background: #ffffff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 106px;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--flow-blue);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .hint {
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      padding: 6px 0;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--slate);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .check-item input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--flow-blue);
+    }
+
+    .error {
+      font-size: 0.82rem;
+      color: var(--error);
+      min-height: 1em;
+    }
+
+    .inline-error {
+      border-color: var(--error);
+      box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.12);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .status {
+      margin-top: 14px;
+      font-weight: 700;
+      min-height: 1.1em;
+    }
+
+    .status.success {
+      color: var(--success);
+    }
+
+    .status.error {
+      color: var(--error);
+    }
+
     @keyframes rise {
       to {
         transform: translateY(0);
@@ -364,7 +496,9 @@
         grid-template-columns: 1fr;
       }
 
-      .features-grid {
+      .features-grid,
+      .grid,
+      .check-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
@@ -384,6 +518,11 @@
         grid-template-columns: 1fr;
       }
 
+      .grid,
+      .check-grid {
+        grid-template-columns: 1fr;
+      }
+
       .hero-actions {
         width: 100%;
       }
@@ -391,10 +530,18 @@
       .btn {
         width: 100%;
       }
+
+      .application-card {
+        padding: 20px;
+      }
+
+      .actions .btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
-<body>
+<body class="view-home">
   <header class="site-header" id="top">
     <div class="container header-inner">
       <a class="brand" href="#top" aria-label="Track Flow home">
@@ -407,14 +554,14 @@
           <li><a href="#services">Services</a></li>
           <li><a href="#benefits">Benefits</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li><a href="application.html">Apply</a></li>
+          <li><a href="#apply">Apply</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero" id="services">
+    <section class="hero home-only" id="services">
       <div class="container hero-layout">
         <div>
           <span class="eyebrow">Logistics Partner</span>
@@ -439,7 +586,7 @@
       </div>
     </section>
 
-    <section id="benefits">
+    <section id="benefits" class="home-only">
       <div class="container">
         <h2 class="section-title">Main features powered by industry experience</h2>
         <p class="section-lead">
@@ -471,7 +618,7 @@
       </div>
     </section>
 
-    <section class="contact" id="contact">
+    <section class="contact home-only" id="contact">
       <div class="container contact-wrap">
         <div>
           <h2 class="section-title">Ready to improve your logistics flow?</h2>
@@ -487,6 +634,108 @@
         <a class="btn btn-primary" href="mailto:hello@trackflow.com">Start the Conversation</a>
       </div>
     </section>
+
+    <section class="apply-view" id="apply">
+      <div class="container">
+        <span class="eyebrow">Application Form</span>
+        <h2 class="section-title">Apply for a tailored Track Flow logistics plan.</h2>
+        <p class="section-lead">
+          Share your business details, logistics scope, and service needs. This helps our team evaluate warehousing, fulfillment, and delivery requirements before the kickoff call.
+        </p>
+
+        <div class="application-card">
+          <form id="applicationForm" novalidate>
+            <div class="grid">
+              <div class="field">
+                <label for="fullName">Full name <span class="required">*</span></label>
+                <input id="fullName" name="fullName" type="text" autocomplete="name" required />
+                <p class="error" id="fullNameError"></p>
+              </div>
+
+              <div class="field">
+                <label for="companyName">Company name <span class="required">*</span></label>
+                <input id="companyName" name="companyName" type="text" autocomplete="organization" required />
+                <p class="error" id="companyNameError"></p>
+              </div>
+
+              <div class="field">
+                <label for="email">Business email <span class="required">*</span></label>
+                <input id="email" name="email" type="email" autocomplete="email" required />
+                <p class="error" id="emailError"></p>
+              </div>
+
+              <div class="field">
+                <label for="phone">Phone number <span class="required">*</span></label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+1 800 555 0199" required />
+                <p class="error" id="phoneError"></p>
+              </div>
+
+              <div class="field">
+                <label for="monthlyOrders">Estimated monthly orders <span class="required">*</span></label>
+                <input id="monthlyOrders" name="monthlyOrders" type="number" min="1" step="1" required />
+                <p class="error" id="monthlyOrdersError"></p>
+              </div>
+
+              <div class="field">
+                <label for="startDate">Preferred start date <span class="required">*</span></label>
+                <input id="startDate" name="startDate" type="date" required />
+                <p class="error" id="startDateError"></p>
+              </div>
+
+              <div class="field-full">
+                <label>Services required <span class="required">*</span></label>
+                <p class="hint">Select at least one service.</p>
+                <div class="check-grid" id="servicesGroup">
+                  <label class="check-item"><input type="checkbox" name="services" value="Warehousing" />Warehousing</label>
+                  <label class="check-item"><input type="checkbox" name="services" value="Inventory management" />Inventory management</label>
+                  <label class="check-item"><input type="checkbox" name="services" value="Order fulfillment" />Order fulfillment</label>
+                  <label class="check-item"><input type="checkbox" name="services" value="Last-mile delivery" />Last-mile delivery</label>
+                </div>
+                <p class="error" id="servicesError"></p>
+              </div>
+
+              <div class="field-full">
+                <label>Coverage needed <span class="required">*</span></label>
+                <p class="hint">Choose the markets and routes you plan to cover.</p>
+                <div class="check-grid" id="coverageGroup">
+                  <label class="check-item"><input type="checkbox" name="coverage" value="Major city distribution" />Major city distribution</label>
+                  <label class="check-item"><input type="checkbox" name="coverage" value="Nearby regional markets" />Nearby regional markets</label>
+                  <label class="check-item"><input type="checkbox" name="coverage" value="Strategic commercial routes" />Strategic commercial routes</label>
+                </div>
+                <p class="error" id="coverageError"></p>
+              </div>
+
+              <div class="field-full">
+                <label for="storageNeeds">Storage and handling requirements <span class="required">*</span></label>
+                <textarea id="storageNeeds" name="storageNeeds" placeholder="Example: palletized inventory, temperature constraints, fragile goods, SKU count" required></textarea>
+                <p class="error" id="storageNeedsError"></p>
+              </div>
+
+              <div class="field-full">
+                <label for="additionalNotes">Additional notes</label>
+                <textarea id="additionalNotes" name="additionalNotes" placeholder="Any timing constraints, peak seasons, or custom requirements"></textarea>
+                <p class="error" id="additionalNotesError"></p>
+              </div>
+
+              <div class="field-full">
+                <label class="check-item">
+                  <input id="terms" name="terms" type="checkbox" required />
+                  I confirm the submitted information is accurate and can be used to prepare a logistics proposal.
+                </label>
+                <p class="error" id="termsError"></p>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-primary" type="submit">Submit Application</button>
+              <a class="btn btn-secondary" href="#top">Back to Main Page</a>
+            </div>
+
+            <p class="status" id="formStatus" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -496,5 +745,161 @@
       <p>&copy; 2026 Track Flow. All rights reserved.</p>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      const form = document.getElementById("applicationForm");
+      const status = document.getElementById("formStatus");
+
+      function updateViewFromHash() {
+        const isApply = window.location.hash === "#apply";
+        document.body.classList.toggle("view-apply", isApply);
+        document.body.classList.toggle("view-home", !isApply);
+      }
+
+      window.addEventListener("hashchange", updateViewFromHash);
+      updateViewFromHash();
+
+      const validators = {
+        fullName: (value) => value.trim().length >= 2 || "Enter your full name.",
+        companyName: (value) => value.trim().length >= 2 || "Enter your company name.",
+        email: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || "Enter a valid email address.",
+        phone: (value) => /^[+]?[-()\s\d]{8,20}$/.test(value.trim()) || "Enter a valid phone number.",
+        monthlyOrders: (value) => Number.isInteger(Number(value)) && Number(value) > 0 || "Monthly orders must be a number greater than 0.",
+        startDate: (value) => {
+          if (!value) {
+            return "Select a preferred start date.";
+          }
+
+          const selected = new Date(value + "T00:00:00");
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          return selected >= today || "Start date cannot be in the past.";
+        },
+        storageNeeds: (value) => value.trim().length >= 15 || "Provide at least 15 characters about storage requirements.",
+        additionalNotes: (value) => value.trim().length <= 800 || "Additional notes cannot exceed 800 characters.",
+        terms: (checked) => checked || "You must confirm the accuracy statement."
+      };
+
+      function setError(fieldId, message) {
+        const input = document.getElementById(fieldId);
+        const error = document.getElementById(fieldId + "Error");
+
+        if (error) {
+          error.textContent = message || "";
+        }
+
+        if (!input) {
+          return;
+        }
+
+        if (message) {
+          input.classList.add("inline-error");
+          input.setAttribute("aria-invalid", "true");
+        } else {
+          input.classList.remove("inline-error");
+          input.removeAttribute("aria-invalid");
+        }
+      }
+
+      function setGroupError(groupId, errorId, message) {
+        const group = document.getElementById(groupId);
+        const error = document.getElementById(errorId);
+
+        if (error) {
+          error.textContent = message || "";
+        }
+
+        if (group) {
+          if (message) {
+            group.classList.add("inline-error");
+          } else {
+            group.classList.remove("inline-error");
+          }
+        }
+      }
+
+      function validateTextField(fieldId) {
+        const input = document.getElementById(fieldId);
+        const validate = validators[fieldId];
+        const result = validate(input.value);
+        setError(fieldId, result === true ? "" : result);
+        return result === true;
+      }
+
+      function validateTerms() {
+        const input = document.getElementById("terms");
+        const result = validators.terms(input.checked);
+        setError("terms", result === true ? "" : result);
+        return result === true;
+      }
+
+      function validateCheckboxGroup(name, groupId, errorId, message) {
+        const checked = form.querySelectorAll(`input[name="${name}"]:checked`).length;
+        const valid = checked > 0;
+        setGroupError(groupId, errorId, valid ? "" : message);
+        return valid;
+      }
+
+      function clearStatus() {
+        status.textContent = "";
+        status.className = "status";
+      }
+
+      ["fullName", "companyName", "email", "phone", "monthlyOrders", "startDate", "storageNeeds", "additionalNotes"].forEach((fieldId) => {
+        const input = document.getElementById(fieldId);
+        input.addEventListener("blur", () => {
+          validateTextField(fieldId);
+          clearStatus();
+        });
+      });
+
+      document.getElementById("terms").addEventListener("change", () => {
+        validateTerms();
+        clearStatus();
+      });
+
+      ["services", "coverage"].forEach((groupName) => {
+        form.querySelectorAll(`input[name="${groupName}"]`).forEach((checkbox) => {
+          checkbox.addEventListener("change", () => {
+            if (groupName === "services") {
+              validateCheckboxGroup("services", "servicesGroup", "servicesError", "Select at least one required service.");
+            } else {
+              validateCheckboxGroup("coverage", "coverageGroup", "coverageError", "Select at least one coverage option.");
+            }
+            clearStatus();
+          });
+        });
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        clearStatus();
+
+        const validFields = ["fullName", "companyName", "email", "phone", "monthlyOrders", "startDate", "storageNeeds", "additionalNotes"]
+          .every((fieldId) => validateTextField(fieldId));
+
+        const validServices = validateCheckboxGroup("services", "servicesGroup", "servicesError", "Select at least one required service.");
+        const validCoverage = validateCheckboxGroup("coverage", "coverageGroup", "coverageError", "Select at least one coverage option.");
+        const validTerms = validateTerms();
+
+        if (!(validFields && validServices && validCoverage && validTerms)) {
+          status.textContent = "Please review the highlighted fields before submitting.";
+          status.classList.add("error");
+          return;
+        }
+
+        status.textContent = "Application submitted successfully. Our team will contact you soon.";
+        status.classList.add("success");
+        form.reset();
+
+        ["fullName", "companyName", "email", "phone", "monthlyOrders", "startDate", "storageNeeds", "additionalNotes", "terms"].forEach((fieldId) => {
+          setError(fieldId, "");
+        });
+        setGroupError("servicesGroup", "servicesError", "");
+        setGroupError("coverageGroup", "coverageError", "");
+      });
+    })();
+  </script>
 </body>
 </html>
